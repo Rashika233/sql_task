@@ -1,0 +1,99 @@
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| rashika            |
+| sys                |
++--------------------+
+5 rows in set (0.00 sec)
+
+mysql> use rasika;
+ERROR 1049 (42000): Unknown database 'rasika'
+mysql> use rashika;
+Database changed
+mysql> show tables;
++-------------------+
+| Tables_in_rashika |
++-------------------+
+| department        |
+| employee          |
+| score             |
+| student           |
++-------------------+
+4 rows in set (0.00 sec)
+
+mysql> select * from student;
++---------+---------+
+| stud_id | name    |
++---------+---------+
+|    2541 | Rashika |
++---------+---------+
+1 row in set (0.01 sec)
+
+mysql> insert into student values(2542,'Andrew');
+Query OK, 1 row affected (0.68 sec)
+
+mysql> insert into student values(2543,'pankaj');
+Query OK, 1 row affected (0.06 sec)
+
+mysql> select * from score;
++---------+-----------+-------------+----------+
+| stud_id | eng_score | maths_score | gk_score |
++---------+-----------+-------------+----------+
+|    2541 |       100 |          28 |       12 |
++---------+-----------+-------------+----------+
+1 row in set (0.00 sec)
+
+mysql> insert into score values(2542,78,76,33);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into score values(2543,75,76,63);
+Query OK, 1 row affected (0.05 sec)
+
+mysql> select * from score;
++---------+-----------+-------------+----------+
+| stud_id | eng_score | maths_score | gk_score |
++---------+-----------+-------------+----------+
+|    2541 |       100 |          28 |       12 |
+|    2542 |        78 |          76 |       33 |
+|    2543 |        75 |          76 |       63 |
++---------+-----------+-------------+----------+
+3 rows in set (0.00 sec)
+
+mysql> select avg(maths_score) 
+    -> ;
+ERROR 1054 (42S22): Unknown column 'maths_score' in 'field list'
+mysql> select avg(maths_score) from score;
++------------------+
+| avg(maths_score) |
++------------------+
+|          60.0000 |
++------------------+
+1 row in set (0.00 sec)
+
+mysql> select eng_score+maths_score+gk_score from score INNER JOIN score on student.stud_id = score.stud_id;
+ERROR 1066 (42000): Not unique table/alias: 'score'
+mysql> select eng_score+maths_score+gk_score from score INNER JOIN student on student.stud_id = score.stud_id;
++--------------------------------+
+| eng_score+maths_score+gk_score |
++--------------------------------+
+|                            140 |
+|                            187 |
+|                            214 |
++--------------------------------+
+3 rows in set (0.00 sec)
+
+mysql> select eng_score+maths_score+gk_score as total_marks from score INNER JOIN student on student.stud_id = score.stud_id;
++-------------+
+| total_marks |
++-------------+
+|         140 |
+|         187 |
+|         214 |
++-------------+
+3 rows in set (0.00 sec)
+
+mysql> 
